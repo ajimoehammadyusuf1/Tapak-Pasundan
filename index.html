@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jabar Summits - Panduan Mendaki</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- logo -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /*WARNA*/
+        :root {
+            --bg-dark: #12100e;
+            --bg-card: #1a1714;       
+            --accent-main: #cfa052;    
+            --text-main: #e6e1db;      
+            --text-muted: #999187;     
+            
+            /* Warna Grade */
+            --grade-hard: #a34646;     
+            --grade-med: #c48237;      
+            --grade-easy: #5e734c;     
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Teks Utility Custom */
+        .text-accent { color: var(--accent-main) !important; }
+        .text-sub { color: var(--text-muted) !important; }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(18, 16, 14, 0.9) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(207, 160, 82, 0.15);
+        }
+        .navbar-brand, .nav-link { color: var(--text-main) !important; cursor: pointer; transition: color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--accent-main) !important; }
+
+        /* Buttons */
+        .btn-custom {
+            background: transparent;
+            color: var(--accent-main);
+            border: 1px solid var(--accent-main);
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-custom:hover, .btn-custom-solid {
+            background: var(--accent-main);
+            color: var(--bg-dark);
+            border-color: var(--accent-main);
+            box-shadow: 0 4px 15px rgba(207, 160, 82, 0.2);
+        }
+        .btn-custom-solid:hover { 
+            background: transparent; 
+            color: var(--accent-main); 
+        }
+        .btn-outline-back {
+            border: 1px solid var(--text-muted);
+            color: var(--text-muted);
+            border-radius: 6px;
+        }
+        .btn-outline-back:hover {
+            background: var(--text-muted);
+            color: var(--bg-dark);
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(rgba(18, 16, 14, 0.8), rgba(7, 6, 4, 0.493)), url('https://i.pinimg.com/736x/19/6d/8d/196d8d0ca09aaabe58d599e5b5ccc00a.jpg') center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.4s ease, border-color 0.4s ease;
+        }
+        .card-img-top {
+            height: 250px;
+            object-fit: cover;
+            filter: brightness(0.65) contrast(1.1) sepia(0.2);
+            transition: filter 0.5s ease, transform 0.5s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(207, 160, 82, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .card:hover .card-img-top {
+            filter: brightness(0.9) contrast(1.1) sepia(0.1);
+            transform: scale(1.03);
+        }
+        .card-body { padding: 1.5rem; }
+        .card-title { color: var(--text-main); font-weight: 600; font-size: 1.1rem; }
+        .card-text { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Images Cinematic */
+        .img-cinematic {
+            border-radius: 10px;
+            filter: brightness(0.75) contrast(1.1) sepia(0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Kotak Grade yang Harmonis */
+        .grade-box {
+            border-radius: 8px;
+            padding: 18px;
+            border-left: 4px solid;
+            margin-bottom: 1.5rem;
+        }
+        .grade-hard { border-color: var(--grade-hard); background: rgba(163, 70, 70, 0.08); }
+        .grade-hard h5 { color: var(--grade-hard); }
+        
+        .grade-med { border-color: var(--grade-med); background: rgba(196, 130, 55, 0.08); }
+        .grade-med h5 { color: var(--grade-med); }
+        
+        .grade-easy { border-color: var(--grade-easy); background: rgba(94, 115, 76, 0.08); }
+        .grade-easy h5 { color: var(--grade-easy); }
+
+        /* List & Breadcrumb */
+        .info-list li { color: var(--text-muted); margin-bottom: 12px; font-size: 0.95rem; }
+        .info-list strong { color: var(--text-main); }
+        .breadcrumb-item a { color: var(--accent-main); text-decoration: none; cursor: pointer; }
+        .breadcrumb-item.active { color: var(--text-muted); }
+        .breadcrumb-item + .breadcrumb-item::before { color: var(--text-muted); }
+
+        /* Accordion */
+        .accordion-item { background-color: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 8px !important; margin-bottom: 12px; overflow: hidden; }
+        .accordion-button { background-color: var(--bg-card); color: var(--text-main); box-shadow: none !important; font-weight: 600; }
+        .accordion-button:not(.collapsed) { background-color: rgba(207, 160, 82, 0.05); color: var(--accent-main); }
+        .accordion-button::after { filter: invert(0.8) sepia(0.3) hue-rotate(5deg); }
+        .accordion-body { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Forms */
+        .form-control { background-color: rgba(0, 0, 0, 0.2); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-main); border-radius: 6px; }
+        .form-control:focus { background-color: rgba(0, 0, 0, 0.4); border-color: var(--accent-main); color: var(--text-main); box-shadow: none; }
+
+        /* Footer */
+        footer { border-top: 1px solid rgba(255, 255, 255, 0.05); background-color: var(--bg-dark); }
+        .footer-link { color: var(--text-muted); text-decoration: none; cursor: pointer; transition: color 0.3s; }
+        .footer-link:hover { color: var(--accent-main); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg fixed-top transition-all">
+        <div class="container">
+            <a class="navbar-brand fw-bold" onclick="showPage('beranda')" style="letter-spacing: 1px;">Tapak Pasundan</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="filter: invert(0.8);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" onclick="showPage('beranda')" id="nav-beranda">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('destinasi')" id="nav-destinasi">Destinasi</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('persiapan')" id="nav-persiapan">Persiapan</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="showPage('kontak')" id="nav-kontak">Kontak</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        
+        <!-- BERANDA -->
+        <section id="beranda" class="page-section">
+            <div class="hero text-center">
+                <div class="container">
+                    <h1 class="display-3 fw-bold mb-3 text-accent" data-aos="zoom-in" data-aos-duration="1200">7 Puncak Pasundan</h1>
+                    <p class="lead mb-5 mx-auto text-sub" style="max-width: 600px;" data-aos="fade-up" data-aos-delay="300">Eksplorasi keindahan alam liar dengan atmosfer hutan yang magis, mulai dari lautan awan hingga kawah purba.</p>
+                    <div data-aos="fade-up" data-aos-delay="600">
+                        <button onclick="showPage('destinasi')" class="btn btn-custom btn-custom-solid px-5 py-3">Mulai Penjelajahan</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DESTINASI -->
+        <section id="destinasi" class="page-section d-none py-5" style="margin-top: 60px; min-height: 80vh;">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold text-uppercase text-accent" style="letter-spacing: 2px;">Daftar Destinasi</h2>
+                    <p class="mb-0 text-sub">Jelajahi lanskap sinematik tertinggi di Jawa Barat.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-lg-4 col-md-6"><div class="card h-100"><img src="https://i.pinimg.com/1200x/ab/6c/77/ab6c7731cc07e7d3a98e2e35b978dab1.jpg" class="card-img-top"><div class="card-body d-flex flex-column"><h5 class="card-title">1. Gunung Ciremai</h5><p class="card-text">Trek panjang menantang tanpa sumber air di ketinggian 3.078 mdpl.</p><button onclick="showPage('detail-ciremai')" class="btn btn-custom mt-auto w-100 py-2">Lihat Detail</button></div></div></div>
+                    <div class="col-lg-4 col-md-6"><div class="card h-100"><img src="https://i.pinimg.com/736x/54/be/f7/54bef7a52895fd386d48b3983221fb11.jpg" class="card-img-top"><div class="card-body d-flex flex-column"><h5 class="card-title">2. Gunung Pangrango</h5><p class="card-text">Hutan lumut lebat yang mengapit Lembah Mandalawangi yang ikonik.</p><button onclick="showPage('detail-pangrango')" class="btn btn-custom mt-auto w-100 py-2">Lihat Detail</button></div></div></div>
+                    <div class="col-lg-4 col-md-6"><div class="card h-100"><img src="https://i.pinimg.com/1200x/3b/54/6a/3b546a0b6cd9010f0afb88c9b9e677d7.jpg" class="card-img-top"><div class="card-body d-flex flex-column"><h5 class="card-title">3. Gunung Gede</h5><p class="card-text">Pesona kawah aktif megah dan hamparan luas Alun-Alun Suryakencana.</p><button onclick="showPage('detail-gede')" class="btn btn-custom mt-auto w-100 py-2">Lihat Detail</button></div></div></div>
+                    <div class="col-lg-4 col-md-6"><div class="card h-100"><img src="https://i.pinimg.com/736x/b5/ed/89/b5ed89a2a481a89ded21d4fae2cc2e94.jpg" class="card-img-top"><div class="card-body d-flex flex-column"><h5 class="card-title">4. Gunung Cikuray</h5><p class="card-text">Tanjakan ekstrem berupa akar padat yang berujung pada lautan awan.</p><button onclick="showPage('detail-cikuray')" class="btn btn-custom mt-auto w-100 py-2">Lihat Detail</button></div></div></div>
+                    <div class="col-lg-4 col-md-6"><div class="card h-100"><img src="https://i.pinimg.com/1200x/8e/e7/8d/8ee78d9a126cf13c5d60ff336fb235c7.jpg" class="card-img-top"><div class="card-body d-flex flex-column"><h5 class="card-title">5. Gunung Papandayan </h5><p class="card-text">Kawasan Hutan Mati yang sangat sinematik dipenuhi kabut belerang..</p><button onclick="showPage('detail-papandayan')" class="btn btn-custom mt-auto w-100 py-2">Lihat Detail</button></div></div></div>
+                    <div class="col-lg-4 col-md-6"><div class="card h-100"><img src="https://i.pinimg.com/1200x/8b/63/34/8b6334a01a445da1234ad0471a80ee89.jpg" class="card-img-top"><div class="card-body d-flex flex-column"><h5 class="card-title">6. Gunung Patuha</h5><p class="card-text">Atmosfer dramatis hutan cantigi yang membalut mistisnya Kawah Putih.</p><button onclick="showPage('detail-patuha')" class="btn btn-custom mt-auto w-100 py-2">Lihat Detail</button></div></div></div>
+                    <div class="col-lg-4 col-md-6"><div class="card h-100"><img src="https://i.pinimg.com/1200x/49/59/c2/4959c2ff20024c6217e8d15c7da8d7b5.jpg" class="card-img-top"><div class="card-body d-flex flex-column"><h5 class="card-title">7. Gunung Malabar</h5><p class="card-text">Suasana hutan basah yang rapat menyimpan puing stasiun radio purba.</p><button onclick="showPage('detail-malabar')" class="btn btn-custom mt-auto w-100 py-2">Lihat Detail</button></div></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PERSIAPAN -->
+        <section id="persiapan" class="page-section d-none py-5" style="margin-top: 60px; min-height: 80vh;">
+            <div class="container">
+                <div class="text-center mb-5"><h2 class="fw-bold text-accent">Panduan Persiapan</h2><p class="text-sub">Persiapan matang adalah kunci penjelajahan yang aman.</p></div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="accordion" id="accordionPersiapan">
+                            <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#col1">1. Pengkondisian Fisik</button></h2><div id="col1" class="accordion-collapse collapse show" data-bs-parent="#accordionPersiapan"><div class="accordion-body">Fokuskan latihan pada ketahanan otot kaki (jogging/sprint) karena trek di area Jawa Barat didominasi akar pohon curam dan tanah padat.</div></div></div>
+                            <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#col2">2. Manajemen Tenda & Dapur (Kelompok)</button></h2><div id="col2" class="accordion-collapse collapse" data-bs-parent="#accordionPersiapan"><div class="accordion-body">Gunakan tenda <i>Double Layer</i> berkerangka kokoh untuk menahan kondensasi embun malam. Pastikan rasio bahan bakar gas dan logistik makanan bernutrisi terhitung detail.</div></div></div>
+                            <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#col3">3. Sistem Pakaian (Pribadi)</button></h2><div id="col3" class="accordion-collapse collapse" data-bs-parent="#accordionPersiapan"><div class="accordion-body">Gunakan sistem <i>layering</i>: Base layer penyerap keringat, insulasi (polar/fleece) untuk hangat, dan <i>outer shell</i> (windproof/waterproof). Sepatu trekking ber-grip tebal wajib dipakai.</div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- KONTAK -->
+        <section id="kontak" class="page-section d-none py-5" style="margin-top: 60px; min-height: 80vh;">
+            <div class="container">
+                <!--gx-lg-5 (jarak samping laptop) & gy-5 (jarak vertikal HP) -->
+                <div class="row align-items-center gx-lg-5 gy-5">
+                    
+                    <!-- Kolom Kiri: Teks & Sosmed -->
+                    <div class="col-md-6">
+                        <h1 class="fw-bold mb-4 text-accent">Hubungi Kami</h1>
+                        <p class="text-sub mb-4">Butuh informasi jalur terbaru atau prosedur simaksi? Tinggalkan pesan Anda di bawah ini, atau ikuti pembaruan kami di media sosial.</p>
+                        
+                        <!-- Informasi Detail -->
+                        <div class="d-flex flex-column gap-3 mb-5">
+                            <div><strong class="text-main">Email:</strong> <span class="text-sub">ajimoehammadyusuf@gmail.com</span></div>
+                            <div><strong class="text-main">WhatsApp:</strong> <span class="text-sub">+62 83179649411</span></div>
+                            <div><strong class="text-main">Basecamp:</strong> <span class="text-sub">Bandung, Jawa Barat</span></div>
+                        </div>
+
+                        <!-- Ikon Sosial Media Interaktif -->
+                        <div>
+                            <h6 class="text-main mb-3 text-uppercase" style="letter-spacing: 1px;">Ikuti Kami di Sosial Media</h6>
+                            <div class="d-flex gap-4 mt-3">
+                                <!-- INSTAGRAM -->
+                                <a href="https://www.instagram.com/nzy.obrien?vrfl=OW96c3NtNXUwdHdx" target="_blank" class="social-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.036 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg>
+                                </a>
+                                
+                                <!-- TIKTOK -->
+                                <a href="https://www.tiktok.com/@steven_50291?_r=1&_t=ZS-9AZffgkE5sS" target="_blank" class="social-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/></svg>
+                                </a>
+                                
+                                <!-- YOUTUBE -->
+                                <a href="https://youtube.com/@username_kamu" target="_blank" class="social-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.052-.072 1.972l-.008.104-.022.261-.01.104c-.048.519-.119 1.023-.22 1.402a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z"/></svg>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <!-- Kolom Kanan: Form Kontak -->
+                        <form action="https://ajimoehammadyusuf@gmail.com" method="POST">
+    
+                        <input type="hidden" name="_captcha" value="false">
+    
+                    <div class="mb-3">
+                        <label class="form-label text-sub small">Nama Lengkap</label>
+                        <input type="text" name="Nama" class="form-control" placeholder="Masukkan nama Anda" required>
+                    </div>
+    
+                    <div class="mb-3">
+                       <label class="form-label text-sub small">Alamat Email</label>
+                       <input type="email" name="Email" class="form-control" placeholder="email@contoh.com" required>
+                    </div>
+    
+                    <div class="mb-4">
+                      <label class="form-label text-sub small">Pesan</label>
+                      <textarea name="Pesan" class="form-control" rows="4" placeholder="Tuliskan pertanyaan Anda..." required></textarea>
+                    </div>
+    
+                    <button type="submit" class="btn btn-custom btn-custom-solid w-100 py-2">Kirim Pesan</button>
+                    </form>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+    
+   
+                               
+
+         
+
+        <!-- HALAMAN DETAIL GUNUNG (Gunakan kelas grade-hard, grade-med, grade-easy) -->
+        
+        <!-- CIREMAI -->
+        <section id="detail-ciremai" class="page-section d-none py-5" style="margin-top: 60px; min-height: 80vh;">
+            <div class="container">
+                <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a onclick="showPage('destinasi')">Destinasi</a></li><li class="breadcrumb-item active">Gunung Ciremai</li></ol></nav>
+                <div class="row mt-4 align-items-center">
+                    <div class="col-lg-6 mb-4"><img src="https://i.pinimg.com/1200x/f7/b7/40/f7b74064d5b068a4b0ff56f646b628fc.jpg" class="img-fluid img-cinematic w-100"></div>
+                    <div class="col-lg-6 ps-lg-5"><h1 class="fw-bold mb-1 text-accent">Gunung Ciremai</h1><h5 class="text-sub mb-4">Ketinggian: 3.078 mdpl</h5>
+                        <!-- Custom Grade Class applied -->
+                        <div class="grade-box grade-hard"><h5 class="fw-bold mb-1">Grade: Sulit (Hard)</h5><p class="mb-0 text-sub small mt-2">Trek elevasi konstan tanpa sumber air di jalur. Membutuhkan daya tahan kardio ekstra.</p></div>
+                        <ul class="list-unstyled info-list mt-2"><li><strong>Lokasi:</strong> Kuningan - Majalengka</li><li><strong>Waktu Tempuh:</strong> 8 - 11 Jam</li><li><strong>Area Camp:</strong> Pos Pengasinan / Goa Walet</li></ul>
+                        <div class="mt-4"><button onclick="showPage('persiapan')" class="btn btn-custom btn-custom-solid px-4 py-2 me-2">Persiapan</button><button onclick="showPage('destinasi')" class="btn btn-outline-back px-4 py-2">Kembali</button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANGRANGO -->
+        <section id="detail-pangrango" class="page-section d-none py-5" style="margin-top: 60px; min-height: 80vh;">
+            <div class="container">
+                <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a onclick="showPage('destinasi')">Destinasi</a></li><li class="breadcrumb-item active">Gunung Pangrango</li></ol></nav>
+                <div class="row mt-4 align-items-center">
+                    <div class="col-lg-6 mb-4"><img src="https://i.pinimg.com/1200x/3d/6d/04/3d6d04780e04e726ac20d845daf78693.jpg" class="img-fluid img-cinematic w-100"></div>
+                    <div class="col-lg-6 ps-lg-5"><h1 class="fw-bold mb-1 text-accent">Gunung Pangrango</h1><h5 class="text-sub mb-4">Ketinggian: 3.019 mdpl</h5>
+                        <div class="grade-box grade-hard"><h5 class="fw-bold mb-1">Grade: Menengah - Sulit</h5><p class="mb-0 text-sub small mt-2">Medan hutan lumut yang rapat, curam, dan licin. Suhu malam hari bisa mendekati titik beku.</p></div>
+                        <ul class="list-unstyled info-list mt-2"><li><strong>Lokasi:</strong> Cianjur - Sukabumi</li><li><strong>Waktu Tempuh:</strong> 7 - 9 Jam</li><li><strong>Area Camp:</strong> Lembah Mandalawangi</li></ul>
+                        <div class="mt-4"><button onclick="showPage('persiapan')" class="btn btn-custom btn-custom-solid px-4 py-2 me-2">Persiapan</button><button onclick="showPage('destinasi')" class="btn btn-outline-back px-4 py-2">Kembali</button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GEDE -->
+        <section id="detail-gede" class="page-section d-none py-5" style="margin-top: 60px; min-height: 80vh;">
+            <div class="container">
+                <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a onclick="showPage('destinasi')">Destinasi</a></li><li class="breadcrumb-item active">Gunung Gede</li></ol></nav>
+                <div class="row mt-4 align-items-center">
+                    <div class="col-lg-6 mb-4"><img src="https://i.pinimg.com/736x/ef/bc/1a/efbc1a88dcc9d7a5b9521ef4c7f0e14e.jpg" class="img-fluid img-cinematic w-100"></div>
+                    <div class="col-lg-6 ps-lg-5"><h1 class="fw-bold mb-1 text-accent">Gunung Gede</h1><h5 class="text-sub mb-4">Ketinggian: 2.958 mdpl</h5>
+                        <div class="grade-box grade-med"><h5 class="fw-bold mb-1">Grade: Sedang (Intermediate)</h5><p class="mb-0 text-sub small mt-2">Jalur tertata cukup rapi dengan bebatuan, namun ada "Tanjakan Setan" yang sangat curam.</p></div>
+                        <ul class="list-unstyled info-list mt-2"><li><strong>Lokasi:</strong> Cianjur - Sukabumi</li><li><strong>Waktu Tempuh:</strong> 6 - 8 Jam</li><li><strong>Area Camp:</strong> Alun-Alun Suryakencana</li></ul>
+                        <div class="mt-4"><button onclick="showPage('persiapan')" class="btn btn-custom btn-custom-solid px-4 py-2 me-2">Persiapan</button><button onclick="showPage('destinasi')" class="btn btn-outline-back px-4 py-2">Kembali</button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CIKURAY -->
+        <section id="detail-cikuray" class="page-section d-none py-5" style="margin-top: 60px; min-height: 80vh;">
+            <div class="container">
+                <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a onclick="showPage('destinasi')">Destinasi</a></li><li class="breadcrumb-item active">Gunung Cikuray</li></ol></nav>
+                <div class="row mt-4 align-items-center">
+                    <div class="col-lg-6 mb-4"><img src="https://i.pinimg.com/1200x/3c/a7/16/3ca716ed9ffbc661f46cc2701799f857.jpg" class="img-fluid img-cinematic w-100"></div>
+                    <div class="col-lg-6 ps-lg-5"><h1 class="fw-bold mb-1 text-accent">Gunung Cikuray</h1><h5 class="text-sub mb-4">Ketinggian: 2.821 mdpl</h5>
+                        <div class="grade-box grade-hard"><h5 class="fw-bold mb-1">Grade: Menengah - Sulit</h5><p class="mb-0 text-sub small mt-2">Trek tanah padat berakar dengan elevasi rapat yang minim area datar untuk memulihkan napas.</p></div>
+                        <ul class="list-unstyled info-list mt-2"><li><strong>Lokasi:</strong> Garut</li><li><strong>Waktu Tempuh:</strong> 6 - 8 Jam</li><li><strong>Area Camp:</strong> Area Puncak (sangat sempit)</li></ul>
+                        <div class="mt-4"><button onclick="showPage('persiapan')" class="btn btn-custom btn-custom-solid px-4 py-2 me-2">Persiapan</button><button onclick="showPage('destinasi')" class="btn btn-outline-back px-4 py-2">Kembali</button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAPANDAYAN -->
+        <section id="detail-papandayan" class="page-section d-none py-5" style="margin-top: 60px; min-height: 80vh;">
+            <div class="container">
+                <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a onclick="showPage('destinasi')">Destinasi</a></li><li class="breadcrumb-item active">Gunung Papandayan</li></ol></nav>
+                <div class="row mt-4 align-items-center">
+                    <div class="col-lg-6 mb-4"><img src="https://i.pinimg.com/1200x/4f/b4/90/4fb490ede57d3b12736e2afbecf173f7.jpg" class="img-fluid img-cinematic w-100"></div>
+                    <div class="col-lg-6 ps-lg-5"><h1 class="fw-bold mb-1 text-accent">Gunung Papandayan</h1><h5 class="text-sub mb-4">Ketinggian: 2.665 mdpl</h5>
+                        <div class="grade-box grade-easy"><h5 class="fw-bold mb-1">Grade: Pemula - Menengah</h5><p class="mb-0 text-sub small mt-2">Trek sangat ramah pendaki baru dengan lanskap kawah dan hutan mati yang fotogenik.</p></div>
+                        <ul class="list-unstyled info-list mt-2"><li><strong>Lokasi:</strong> Cisurupan, Garut</li><li><strong>Waktu Tempuh:</strong> 3 - 4 Jam</li><li><strong>Area Camp:</strong> Pondok Saladah</li></ul>
+                        <div class="mt-4"><button onclick="showPage('persiapan')" class="btn btn-custom btn-custom-solid px-4 py-2 me-2">Persiapan</button><button onclick="showPage('destinasi')" class="btn btn-outline-back px-4 py-2">Kembali</button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+        
+
+        <!-- PATUHA -->
+        <section id="detail-patuha" class="page-section d-none py-5" style="margin-top: 60px; min-height: 80vh;">
+            <div class="container">
+                <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a onclick="showPage('destinasi')">Destinasi</a></li><li class="breadcrumb-item active">Gunung Patuha</li></ol></nav>
+                <div class="row mt-4 align-items-center">
+                    <div class="col-lg-6 mb-4"><img src="https://i.pinimg.com/736x/6c/7a/b3/6c7ab3cf6cd4a79e488a7c41d688b54f.jpg" class="img-fluid img-cinematic w-100"></div>
+                    <div class="col-lg-6 ps-lg-5"><h1 class="fw-bold mb-1 text-accent">Gunung Patuha</h1><h5 class="text-sub mb-4">Ketinggian: 2.434 mdpl</h5>
+                        <div class="grade-box grade-easy"><h5 class="fw-bold mb-1">Grade: Pemula (Beginner)</h5><p class="mb-0 text-sub small mt-2">Akses sangat mudah dan terkelola dengan baik. Cocok untuk pendakian santai (tektok).</p></div>
+                        <ul class="list-unstyled info-list mt-2"><li><strong>Lokasi:</strong> Ciwidey, Kab. Bandung</li><li><strong>Waktu Tempuh:</strong> 2 - 3 Jam</li><li><strong>Area Camp:</strong> Puncak Sunan Ibu</li></ul>
+                        <div class="mt-4"><button onclick="showPage('persiapan')" class="btn btn-custom btn-custom-solid px-4 py-2 me-2">Persiapan</button><button onclick="showPage('destinasi')" class="btn btn-outline-back px-4 py-2">Kembali</button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      <!-- MALABAR -->
+        <section id="detail-malabar" class="page-section d-none py-5" style="margin-top: 60px; min-height: 80vh;">
+            <div class="container">
+                <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a onclick="showPage('destinasi')">Destinasi</a></li><li class="breadcrumb-item active">Gunung Malabar</li></ol></nav>
+                <div class="row mt-4 align-items-center">
+                    <div class="col-lg-6 mb-4"><img src="https://i.pinimg.com/1200x/49/59/c2/4959c2ff20024c6217e8d15c7da8d7b5.jpg" class="img-fluid img-cinematic w-100"></div>
+                    <div class="col-lg-6 ps-lg-5"><h1 class="fw-bold mb-1 text-accent">Gunung Malabar</h1><h5 class="text-sub mb-4">Ketinggian: 2.343 mdpl</h5>
+                        <div class="grade-box grade-med"><h5 class="fw-bold mb-1">Grade: Sedang (Intermediate)</h5><p class="mb-0 text-sub small mt-2">Jalur hutan basah berkanopi lebat. Harus waspada pacet saat musim hujan.</p></div>
+                        <ul class="list-unstyled info-list mt-2"><li><strong>Lokasi:</strong> Pangalengan, Kab. Bandung</li><li><strong>Waktu Tempuh:</strong> 4 - 6 Jam</li><li><strong>Area Camp:</strong> Puncak Besar</li></ul>
+                        <div class="mt-4"><button onclick="showPage('persiapan')" class="btn btn-custom btn-custom-solid px-4 py-2 me-2">Persiapan</button><button onclick="showPage('destinasi')" class="btn btn-outline-back px-4 py-2">Kembali</button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- FOOTER -->
+    <footer class="py-5 mt-auto">
+        <div class="container text-md-start text-center">
+            <div class="row">
+                <div class="col-md-5 mb-4"><h5 class="fw-bold mb-3 text-accent">Tapak Pasundan</h5><p class="text-sub small pe-md-4">Referensi terpercaya untuk merencanakan petualangan mendaki di tanah Pasundan.</p></div>
+                <div class="col-md-7">
+                    <div class="row">
+                        <div class="col-6 mb-4"><h6 class="text-main mb-3">Navigasi</h6><ul class="list-unstyled small"><li><a onclick="showPage('destinasi')" class="footer-link">Daftar Gunung</a></li><li class="mt-2"><a onclick="showPage('persiapan')" class="footer-link">Persiapan Fisik</a></li></ul></div>
+                        <div class="col-6 mb-4"><h6 class="text-main mb-3">Informasi</h6><p class="text-sub small mb-1">info@jabarsummits.id</p><p class="text-sub small">Bandung, Jawa Barat</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3 pt-4 border-top border-secondary small text-sub">&copy; 2026 Tapak Pasundan. Built for Adventure.</div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(section => section.classList.add('d-none'));
+            document.getElementById(pageId).classList.remove('d-none');
+
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            if (pageId.includes('detail')) {
+                document.getElementById('nav-destinasi').classList.add('active');
+            } else {
+                document.getElementById('nav-' + pageId).classList.add('active');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
